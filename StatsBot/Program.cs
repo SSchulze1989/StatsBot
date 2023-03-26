@@ -127,6 +127,14 @@ foreach (var (season, results, standings) in seasonData.Zip(seasonResults, seaso
     }
     var seasonStats = CalculateSeasonStatistics(season, results, standings);
     Console.WriteLine("Calculated season stats");
+    if (season.Finished)
+    {
+        foreach(var row in driverRows)
+        {
+            row.IsCurrentChamp = false;
+            row.IsCurrentHeChamp = false;
+        }
+    }
     driverRows = AggregateStatisticRows(driverRows, seasonStats);
 }
 
