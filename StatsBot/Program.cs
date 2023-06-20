@@ -273,7 +273,7 @@ IEnumerable<DriverStatisticRow> CalculateResultStatistics(EventResultModel event
             RacePoints = (int)row.RacePoints,
             Races = 1,
             RacesCompleted = row.CompletedPct > 0.75 ? 1 : 0,
-            RacesCompletedPctVal = row.CompletedPct.GetValueOrDefault(),
+            RacesCompletedPctVal = row.CompletedPct > 0.75 ? 1 : 0,
             RacesInPoints = row.RacePoints > 0 ? 1 : 0,
             StartIRating = row.OldIrating,
             StartSRating = row.OldSafetyRating / 100.0,
@@ -286,8 +286,8 @@ IEnumerable<DriverStatisticRow> CalculateResultStatistics(EventResultModel event
             TotalPoints = (int)row.TotalPoints,
             Wins = row.FinalPosition == 1 ? 1 : 0,
             WorstFinalPosition = row.FinalPosition,
-            WorstFinishPosition = row.FinalPosition,
-            WorstStartPosition = row.FinalPosition,
+            WorstFinishPosition = (int)row.FinishPosition,
+            WorstStartPosition = (int)row.StartPosition,
         };
         statRows.Add(statRow);
     }
