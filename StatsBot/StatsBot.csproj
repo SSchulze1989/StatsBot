@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="iRLeagueApiCore.Client" Version="0.4.1-dev.6" />
+    <PackageReference Include="iRLeagueApiCore.Client" Version="0.10.1" />
   </ItemGroup>
 
   <ItemGroup>

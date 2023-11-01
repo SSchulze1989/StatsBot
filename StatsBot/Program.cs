@@ -15,7 +15,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var services = new ServiceCollection();
-services.AddLogging();
 services.TryAddScoped(options => new HttpClient()
 {
     BaseAddress = new Uri("https://irleaguemanager.net/api/")
@@ -27,8 +26,7 @@ services.AddScoped(configure =>
     jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     return jsonOptions;
 });
-services.TryAddScoped<ITokenStore>(options => new DummyTokenStore());
-services.TryAddScoped<ILeagueApiClient, LeagueApiClient>();
+services.AddLeagueApiClient();
 
 var provider = services.BuildServiceProvider();
 
