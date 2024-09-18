@@ -97,10 +97,9 @@ if (string.IsNullOrEmpty(outFile))
 
 var tracks = (await client.Tracks().Get()).Content!;
 var members = (await client.CurrentLeague.Members().Get()).Content!;
-var seasonIds = league.SeasonIds.Skip(skipSeasons);
-var seasonData = seasonIds.Select(x => client.CurrentLeague.Seasons().WithId(x).Get().Result.Content!).ToList();
-var seasonResults = seasonIds.Select(x => client.CurrentLeague.Seasons().WithId(x).Results().Get().Result.Content).Where(x => x is not null).ToList();
-var seasonStandings = seasonIds.Select(x => client.CurrentLeague.Seasons().WithId(x).Standings().Get().Result.Content!).ToList();
+var seasonData = (await client.CurrentLeague.Seasons().Get()).Content!.Skip(skipSeasons).ToList();
+var seasonResults = seasonData.Select(x => client.CurrentLeague.Seasons().WithId(x.SeasonId).Results().Get().Result.Content).Where(x => x is not null).ToList();
+var seasonStandings = seasonData.Select(x => client.CurrentLeague.Seasons().WithId(x.SeasonId).Standings().Get().Result.Content!).ToList();
 
 IEnumerable<DriverStatisticRow> driverRows = Array.Empty<DriverStatisticRow>();
 if (string.IsNullOrWhiteSpace(importFile) == false)
@@ -124,7 +123,7 @@ foreach (var (season, results, standings) in seasonData.Zip(seasonResults, seaso
         continue;
     }
     var seasonStats = CalculateSeasonStatistics(season, results, standings);
-    Console.WriteLine("Calculated season stats");
+    Console.WriteLine($"Calculated season stats - {season.SeasonName} (Id: {season.SeasonId})");
     if (season.Finished)
     {
         foreach(var row in driverRows)
