@@ -101,7 +101,7 @@ var seasonData = (await client.CurrentLeague.Seasons().Get()).Content!.Skip(skip
 var seasonResults = seasonData.Select(x => client.CurrentLeague.Seasons().WithId(x.SeasonId).Results().Get().Result.Content).Where(x => x is not null).ToList();
 var seasonStandings = seasonData.Select(x => client.CurrentLeague.Seasons().WithId(x.SeasonId).Standings().Get().Result.Content!).ToList();
 
-IEnumerable<DriverStatisticRow> driverRows = Array.Empty<DriverStatisticRow>();
+IEnumerable<DriverStatisticRow> driverRows = [];
 if (string.IsNullOrWhiteSpace(importFile) == false)
 {
     var csvString = Resources.AllTimeStats_SkippyCup_until_S21;
@@ -156,7 +156,7 @@ Console.WriteLine(league.Name);
 
 IEnumerable<DriverStatisticRow> CalculateSeasonStatistics(SeasonModel season, IEnumerable<SeasonEventResultModel> seasonResults, IEnumerable<StandingsModel> seasonStandings)
 {
-    IEnumerable<DriverStatisticRow> driverStatRows = Array.Empty<DriverStatisticRow>();
+    IEnumerable<DriverStatisticRow> driverStatRows = [];
     foreach(var seasonResult in seasonResults.OrderBy(x => x.EventResults.FirstOrDefault()?.Date))
     {
         var resultStatRows = CalculateEventStatistisc(seasonResult.EventResults);
@@ -205,7 +205,7 @@ IEnumerable<DriverStatisticRow> CalculateEventStatistisc(IEnumerable<EventResult
 {
     if (eventResult.Any() == false || eventResult.First().SessionResults.Any() == false)
     {
-        return Array.Empty<DriverStatisticRow>();
+        return [];
     }
 
     var rows = new List<DriverStatisticRow>();

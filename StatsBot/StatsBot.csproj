@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Version>1.2.0</Version>
+	<Version>1.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="iRLeagueApiCore.Client" Version="0.12.1" />
+    <PackageReference Include="iRLeagueApiCore.Client" Version="0.13.0" />
   </ItemGroup>
 
   <ItemGroup>
